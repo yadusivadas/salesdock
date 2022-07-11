@@ -1,0 +1,19 @@
+Clone this project and
+
+copy .env.example file and rename that to .env
+
+run the command "php artisan key:generate"
+
+create a databse (mysql) and add credentials in env file
+
+<!-- DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=yadu
+DB_USERNAME=admin
+DB_PASSWORD=admin@123 -->
+
+run "composer install"
+
+php artisan tinker
+SubscriptionProduct::factory()->count(10)->create();
