@@ -3,26 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\SubscriptionProduct;
+use App\Models\Lead;
+use App\Models\Sale;
+use App\Models\Relation;
 
-use App\Rules\TechnologyRule;
-use App\Rules\UploadSpeedRule;
-use App\Rules\DownloadSpeedRule;
+use App\Services\InjectorService;
+
 
 class HomeController extends Controller
 {
     public function index()
     {
 
-        $rules = [];
-        $rules[] = [UploadSpeedRule::class, ['greaterThan:100', 'lessThan:300']];
-        $rules[] = [TechnologyRule::class, ['fiber']];
-        // $rules[] = [DownloadSpeedRule::class, ['greaterThan:100', 'lessThan:200']];
-
-        $subscriptionProducts = SubscriptionProduct::filterBy($rules)->get();
-        return view('subscription_products_list')->with([
-            'subscriptionProducts' => $subscriptionProducts,
-            'rules' => $rules
+        $leads = Lead::all();
+        $sales = Sale::all();
+        $relations = Relation::all();
+        return view('index')->with([
+            'leads' => $leads,
+            'sales' => $sales,
+            'relations' => $relations
         ]);
+    }
+
+    public function sale(Request $request)
+    {
+        $test = InjectorService::add($request);
+
+        return redirect('/')->with('success', 'Task completed');
+
     }
 }
